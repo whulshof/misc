@@ -14,17 +14,19 @@ from odoo.exceptions import UserError
 _logger = logging.getLogger(__name__)
 
 
-class IrAttachment(models.Model):
-    _inherit = 'ir.attachment'
-    
-    mail_message_id = fields.Many2one("mail.message","Mail Message ID")
-
-    @api.model
-    def create(self,vals):
-        res = super(IrAttachment,self).create(vals)
-        ir_attachment_metadata = self.env['ir.attachment.metadata']
-        ir_attachment_metadata.create({'attachment_id':res.id})
-        return res
+# Because ir.attachment.metadata is an 'inherits' of ir.attachment, we don't need this create() method and
+# we'll rather add the field to ir.attachment.metadata
+# class IrAttachment(models.Model):
+#     _inherit = 'ir.attachment'
+#
+#     mail_message_id = fields.Many2one("mail.message","Mail Message ID")
+#
+#     @api.model
+#     def create(self,vals):
+#         res = super(IrAttachment,self).create(vals)
+#         ir_attachment_metadata = self.env['ir.attachment.metadata']
+#         ir_attachment_metadata.create({'attachment_id':res.id})
+#         return res
         
 
 class Message(models.Model):
